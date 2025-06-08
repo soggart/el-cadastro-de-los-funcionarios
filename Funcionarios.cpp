@@ -63,3 +63,48 @@ void Estagiario::exibirInformacoes(){
     cout << "Salário base: " << this->salarioBase << "\nSalário final: " << calcularSalarioFinal() << endl;
 }
 float Estagiario::calcularSalarioFinal(){return this->salarioBase * (this->horasTrabalhadas / 160.0);}
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Funções>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Funcionario* criarFuncionario(){
+    string nome;
+    float salarioBase;
+    int id, tipo;
+
+    cout << "\n--- Cadastro de Funcionário ---\n";
+    cout << "Nome: ";
+    cin.ignore(); // Limpa o buffer
+    getline(cin, nome);
+
+    cout << "ID: ";
+    cin >> id;
+
+    cout << "Salário base: ";
+    cin >> salarioBase;
+
+    cout << "Tipo (1 - Desenvolvedor, 2 - Gerente, 3 - Estagiário): ";
+    cin >> tipo;
+
+    switch (tipo) {
+        case 1: {
+            int projetos;
+            cout << "Quantidade de projetos: ";
+            cin >> projetos;
+            return new Desenvolvedor(nome, salarioBase, id, projetos);
+        }
+        case 2: {
+            float bonus;
+            cout << "Bônus mensal: ";
+            cin >> bonus;
+            return new Gerente(nome, salarioBase, id, bonus);
+        }
+        case 3: {
+            int horas;
+            cout << "Horas trabalhadas: ";
+            cin >> horas;
+            return new Estagiario(nome, salarioBase, id, horas);
+        }
+        default:
+            cout << "Tipo inválido. Funcionário não criado.\n";
+            return nullptr;
+    }
+}
