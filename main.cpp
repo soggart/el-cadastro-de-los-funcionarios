@@ -4,41 +4,85 @@
 
 using namespace std;
 
-int main(){
+Funcionario* criarFuncionario() {
+    string nome;
+    float salarioBase;
+    int id, tipo;
+
+    cout << "\n--- Cadastro de Funcionário ---\n";
+    cout << "Nome: ";
+    cin.ignore(); // Limpa o buffer
+    getline(cin, nome);
+
+    cout << "ID: ";
+    cin >> id;
+
+    cout << "Salário base: ";
+    cin >> salarioBase;
+
+    cout << "Tipo (1 - Desenvolvedor, 2 - Gerente, 3 - Estagiário): ";
+    cin >> tipo;
+
+    switch (tipo) {
+        case 1: {
+            int projetos;
+            cout << "Quantidade de projetos: ";
+            cin >> projetos;
+            return new Desenvolvedor(nome, salarioBase, id, projetos);
+        }
+        case 2: {
+            float bonus;
+            cout << "Bônus mensal: ";
+            cin >> bonus;
+            return new Gerente(nome, salarioBase, id, bonus);
+        }
+        case 3: {
+            int horas;
+            cout << "Horas trabalhadas: ";
+            cin >> horas;
+            return new Estagiario(nome, salarioBase, id, horas);
+        }
+        default:
+            cout << "Tipo inválido. Funcionário não criado.\n";
+            return nullptr;
+    }
+}
+
+int main() {
     cout << fixed << setprecision(2);
+
     Funcionario* vetor[10];
+    int quantidade = 0;
 
-    vetor[0] = new Desenvolvedor("Joana", 3000.00, 101, 3);
-    /* Saída esperada:
-ID: 101 
-Nome: Joana 
-Tipo: Desenvolvedor 
-Projetos: 3 
-Salário base: 3000.00 
-Salário final: 4500.00 
-    */
-    vetor[1] = new Estagiario("Carlos", 1200.00, 102, 80);
-    /* Saída esperada:
-ID: 102 
-Nome: Carlos 
-Tipo: Estagiário 
-Horas trabalhadas: 80 
-Salário base: 1200.00    
-Salário final: 600.00 
-    */
-    vetor[2] = new Gerente("Marina", 5000.00, 103, 2000.00);
-    /* Saída esperada:
-ID: 103 
-Nome: Marina 
-Tipo: Gerente 
-Bônus: 2000.00 
-Salário base: 5000.00  
-Salário final: 7000.00 
-    */
-    int n = 3; // Quantidade de funcionários, altere quando adicionar mais
-    for (int i = 0; i < n; ++i) {vetor[i]->exibirInformacoes();}
+    cout << "Quantos funcionários deseja cadastrar? (mínimo 6, máximo 10): ";
+    cin >> quantidade;
 
-    // Liberando memória
-    for (int i = 0; i < n; ++i) {delete vetor[i];}
+    while (quantidade < 6 || quantidade > 10) {
+        cout << "Número inválido. Digite entre 6 e 10: ";
+        cin >> quantidade;
+    }
+
+    int i = 0;
+    while (i < quantidade) {
+        Funcionario* f = criarFuncionario();
+        if (f != nullptr) {
+            vetor[i] = f;
+            ++i;
+        } else {
+            cout << "Tente novamente.\n";
+        }
+    }
+
+    cout << "\n========= LISTA DE FUNCIONÁRIOS =========\n";
+    for (int j = 0; j < quantidade; ++j) {
+        cout << "\nFuncionário #" << (j + 1) << endl;
+        vetor[j]->exibirInformacoes();
+    }
+
+    // Liberação de memória
+    for (int j = 0; j < quantidade; ++j) {
+        delete vetor[j];
+    }
+
     return 0;
 }
