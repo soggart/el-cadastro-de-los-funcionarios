@@ -62,4 +62,4 @@ void Estagiario::exibirInformacoes(){
     cout << "Horas trabalhadas: " << this->horasTrabalhadas << endl;
     cout << "Salário base: " << this->salarioBase << "\nSalário final: " << calcularSalarioFinal() << endl;
 }
-float Estagiario::calcularSalarioFinal(){return this->salarioBase + (this->horasTrabalhadas / 160.0);}
+float Estagiario::calcularSalarioFinal(){return this->salarioBase * (this->horasTrabalhadas / 160.0);}
