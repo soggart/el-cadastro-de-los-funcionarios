@@ -63,4 +63,7 @@ public:
     float calcularSalarioFinal();
 };
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Funções>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+Funcionario* criarFuncionario();
+
 #endif
